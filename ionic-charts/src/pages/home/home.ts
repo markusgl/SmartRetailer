@@ -12,7 +12,7 @@ export class HomePage {
   @ViewChild('lineCanvas') lineCanvas;
   observer: Observable<any>;
   result : JSON;
-  products: any[];
+  //products: any[];
   items = [{"id": "2", 
             "name": "iphone", 
             "data": "blub" }]
@@ -23,11 +23,10 @@ export class HomePage {
     this.observer.subscribe(data => { 
       this.result = data
      })
-     console.log("result", this.result[0])
 
      for (let product in this.result){
       console.log(this.result[product])
-      this.products.push(this.result[product])
+      this.items.push(this.result[product])
      }     
 
   }
@@ -38,7 +37,6 @@ export class HomePage {
     this.observer.subscribe(data => { 
       this.result = data
      })
-    
   }
 
 }
