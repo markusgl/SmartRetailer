@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'page-home',
@@ -8,6 +9,7 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
   @ViewChild('lineCanvas') lineCanvas;
+  plotdata: Observable<any>;
 
   /** ####### Line Chart ###### */
   public lineChartData:Array<any> = [
@@ -130,8 +132,12 @@ export class HomePage {
     console.log(e);
   }
 
-  constructor(public navCtrl: NavController) {
-
+  // call the rest api inside the constructor
+  constructor(public navCtrl: NavController, public httpClient: HttpClient) {
+    this.plotdata = this.httpClient.get('http://localhost:5000/providedata')
+    this.plotdata.subscribe(data => {
+      console.log('data: ', data);
+    })
   }
 
 }
