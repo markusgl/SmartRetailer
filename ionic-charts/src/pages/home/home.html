@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Retailer View</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>TimeConsumer</h2>
+  <ion-card>
+    <ion-card-header>
+      Line Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart width="300" height="400"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+      </canvas>
+      <button (click)="randomize()">Update</button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+        Bar Chart
+    </ion-card-header>
+      <ion-card-content>
+        <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        (chartHover)="barChartHovered($event)"
+        (chartClick)="barChartClicked($event)">
+      </canvas>    
+      <button (click)="randomizeBarChart()">Update</button>
+
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      Doughnut Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+                  [data]="doughnutChartData"
+                  [labels]="doughnutChartLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="doughnutChartHovered($event)"
+                  (chartClick)="doughnutChartClicked($event)">
+      </canvas>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
