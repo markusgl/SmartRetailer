@@ -1,62 +1,42 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Retailer View</ion-title>
+    <ion-title>Smart Customer</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>TimeConsumer</h2>
+  <h2>Be Smart Buy hard</h2>
   <ion-card>
-    <ion-card-header>
-      Line Chart
-    </ion-card-header>
+    <img src=""/>
     <ion-card-content>
-      <canvas baseChart width="300" height="400"
-        [datasets]="lineChartData"
-        [labels]="lineChartLabels"
-        [options]="lineChartOptions"
-        [colors]="lineChartColors"
-        [legend]="lineChartLegend"
-        [chartType]="lineChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
-    </canvas>
-      <button (click)="randomize()">Update</button>
+      <ion-card-title>
+        Product A
+        </ion-card-title>
+      <p>
+        blablub
+      </p>
     </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button (click)="getSimilarProducts()" ion-button icon-start clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>Show similar products</div>
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-        Bar Chart
-    </ion-card-header>
-      <ion-card-content>
-        <canvas baseChart
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [legend]="barChartLegend"
-        [chartType]="barChartType"
-        (chartHover)="barChartHovered($event)"
-        (chartClick)="barChartClicked($event)">
-      </canvas>    
-      <button (click)="randomizeBarChart()">Update</button>
+  <ion-list>
+      <ion-item *ngFor="let item of items">
+        <ion-thumbnail item-start>
+          <img src="img/thumbnail-totoro.png">
+        </ion-thumbnail>
+        <h2>{{ item.name }}</h2>
+        <p> {{ item.data }}</p>
+        <button ion-button clear item-end>View</button>
+      </ion-item>
+    </ion-list>
 
-    </ion-card-content>
-  </ion-card>
-  
-  <ion-card>
-    <ion-card-header>
-      Doughnut Chart
-    </ion-card-header>
-    <ion-card-content>
-      <canvas baseChart
-                  [data]="doughnutChartData"
-                  [labels]="doughnutChartLabels"
-                  [chartType]="doughnutChartType"
-                  (chartHover)="doughnutChartHovered($event)"
-                  (chartClick)="doughnutChartClicked($event)">
-      </canvas>
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>
