@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Price View</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      Price Chart
+    </ion-card-header>
+      <ion-card-content>
+        <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        (chartHover)="barChartHovered($event)"
+        (chartClick)="barChartClicked($event)">
+      </canvas>    
+      <button (click)="randomizeBarChart()">Update</button>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
