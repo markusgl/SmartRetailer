@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/observable/interval'
 
 @Component({
   selector: 'page-home',
@@ -11,31 +12,67 @@ import { HttpClient } from '@angular/common/http';
 export class HomePage {
   @ViewChild('lineCanvas') lineCanvas;
   observer: Observable<any>;
-  result : JSON;
-  //products: any[];
+  //result : JSON;
+  result: any;
   items = []
+  timerVar;
+  timerMin=10;
+  timerSec=59;
+  data:any={}
 
-
-  public getSimilarProducts(){
+  public getSimilarProducts(productname:String){
     this.items = []
-    this.observer = this.httpClient.get('http://localhost:5000/similarprods')
+
+    console.log(productname)
+    //this.observer = this.httpClient.get('http://localhost:5000/similarprods')
+    //postData.append("data", "Apple iPhone 7 Plus (32GB)")
+    //let postData = JSON.stringify({"data": "Apple iPhone 7 Plus (32GB)"});;
+    //let headers = new HttpHeaders()
+    //headers = headers.append('Content-Type','application/json')
+    
+    //Apple iPhone 7 Plus (32GB)
+    let postData = {"data": productname}
+
+    this.observer = this.httpClient.post('http://localhost:5000/devicedata', postData)
     this.observer.subscribe(data => { 
       this.result = data
      })
+     let json_result;
 
-     for (let product in this.result){
+     if (this.result != undefined){
+       json_result = JSON.parse(JSON.stringify(this.result))
+       //console.log(json_result['recommendations'])
+       for (let product in json_result['recommendations']){
+        console.log(json_result['recommendations'][product])
+        this.items.push(json_result['recommendations'][product])
+      }
+     }
+
+     /*for (let product in this.result){
       console.log(this.result[product])
       this.items.push(this.result[product])
-     }     
-
+     }*/
   }
+
+  startTimer(){
+    // one second interval
+    this.timerVar = Observable.interval(1000).subscribe( x => {
+        this.timerSec -= 1;
+        
+        if (x == 0) {
+          this.timerVar.unsubscribe()
+        }
+    })
+  }
+
 
   // call the rest api inside the constructor
   constructor(public navCtrl: NavController, public httpClient: HttpClient) {
-    this.observer = this.httpClient.get('http://localhost:5000/similarprods')
+    /*this.observer = this.httpClient.get('http://localhost:5000/similarprods')
     this.observer.subscribe(data => { 
       this.result = data
-     })
+     })*/
+     this.data.productname=""
   }
 
 }
