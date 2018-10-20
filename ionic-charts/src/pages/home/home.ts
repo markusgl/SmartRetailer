@@ -13,12 +13,11 @@ export class HomePage {
   observer: Observable<any>;
   result : JSON;
   //products: any[];
-  items = [{"id": "2", 
-            "name": "iphone", 
-            "data": "blub" }]
+  items = []
 
 
   public getSimilarProducts(){
+    this.items = []
     this.observer = this.httpClient.get('http://localhost:5000/similarprods')
     this.observer.subscribe(data => { 
       this.result = data
