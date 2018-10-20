@@ -30,21 +30,25 @@
                 Start
             </button>
       </ion-item>
-    </ion-card>-->
+    </ion-card>
 
   <ion-item>
       <ion-label color="primary"></ion-label>
       <ion-input placeholder="Product name" [(ngModel)]="data.productname"></ion-input>      
-  </ion-item>
-  <button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>Search similar products</button>
+  </ion-item> --> 
 
   <ion-item>
     <ion-label>Products</ion-label>
-    <ion-select [(ngModel)]="products">
-      <ion-option *ngFor="let product of products">{{ product }}</ion-option>
+    <ion-select [(ngModel)]="data.productname" (ionChange)="getSimilarProducts(product)">
+      <ion-option *ngFor="let product of products; let i=index" >{{ product }}</ion-option>
     </ion-select>
   </ion-item>
-  <button (click)="getProductList()" ion-button icon-start clear small>Search products</button>
+
+  <ion-item>
+    <ion-icon name="md-git-compare"></ion-icon>
+    <button (click)="getProductList()" ion-button icon-start clear small>Refresh product list</button>
+    <!--<button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>Search similar products</button>-->
+  </ion-item>
 
   <ion-card *ngIf="data.productname">
     <!--<img src="/test.jpg"/>-->
@@ -59,8 +63,8 @@
 
     <ion-row>
       <ion-col>
-        <button (click)="getSimilarProducts()" ion-button icon-start clear small>
-          <ion-icon name="thumbs-up"></ion-icon>
+        <button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>
+          <ion-icon name="md-appstore"></ion-icon>
           <div>Show similar products</div>
         </button>
       </ion-col>
@@ -80,6 +84,5 @@
         <button ion-button clear item-end>View</button>
       </ion-item>
     </ion-list>
-
 
 </ion-content>

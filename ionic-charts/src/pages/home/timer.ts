@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component } from '@angular/core';
 
 export interface CountdownTimer {
   seconds: number;
@@ -11,8 +10,8 @@ export interface CountdownTimer {
 }
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'timer',
+  templateUrl: 'timer.html'
 })
 
 export class Timer {

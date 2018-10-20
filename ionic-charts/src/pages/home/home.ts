@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/observable/interval'
+//import 'rxjs/add/observable/interval'
 
 @Component({
   selector: 'page-home',
@@ -23,7 +23,6 @@ export class HomePage {
 
   public getSimilarProducts(productname:String){
     this.items = []
-
     //let headers = new HttpHeaders()
     //headers = headers.append('Content-Type','application/json')
     
@@ -37,41 +36,39 @@ export class HomePage {
         this.result = data
       })
 
-      console.log("result", this.result)
       let json_result;
 
       if (this.result != undefined){
         json_result = JSON.parse(JSON.stringify(this.result))
         
-        console.log(json_result['recommendations'])
         for (let product in json_result['recommendations']){
-          console.log(json_result['recommendations'][product])
           this.items.push(json_result['recommendations'][product])
         }
+      }
+      else{
+        // TODO
+        console.log("No similar products found.")
       }
     }
   }
 
   public getProductList(){
-    
     this.httpClient.get('http://localhost:5000/getDeviceList').subscribe(data => 
     { 
       this.result2 = data
-    })
+    }) 
 
-    console.log("product results", this.result2)
-
-    /*let json_result
-    if (result2 != undefined){
-      json_result = JSON.parse(JSON.stringify(this.result))
+    let json_result
+    if (this.result2 != undefined){
+      json_result = JSON.parse(JSON.stringify(this.result2))
       for (let product in json_result){
-        console.log(json_result)
-        this.products.push(json_result)
+        this.products.push(json_result[product])
       }
-    }*/
+      this.products.sort()
+    }
   }
 
-  startTimer(){
+  /*startTimer(){
     // one second interval
     this.timerVar = Observable.interval(1000).subscribe( x => {
         this.timerSec -= 1;
@@ -80,8 +77,7 @@ export class HomePage {
           this.timerVar.unsubscribe()
         }
     })
-  }
-
+  }*/
 
   // call the rest api inside the constructor
   constructor(public navCtrl: NavController, public httpClient: HttpClient) {
@@ -92,5 +88,4 @@ export class HomePage {
      this.data.productname=""
      this.getProductList()
   }
-
 }
