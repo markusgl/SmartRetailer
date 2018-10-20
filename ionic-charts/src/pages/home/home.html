@@ -38,8 +38,16 @@
   </ion-item>
   <button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>Search similar products</button>
 
+  <ion-item>
+    <ion-label>Products</ion-label>
+    <ion-select [(ngModel)]="products">
+      <ion-option *ngFor="let product of products">{{ product }}</ion-option>
+    </ion-select>
+  </ion-item>
+  <button (click)="getProductList()" ion-button icon-start clear small>Search products</button>
+
   <ion-card *ngIf="data.productname">
-    <img src="/test.jpg"/>
+    <!--<img src="/test.jpg"/>-->
     <ion-card-content>
       <ion-card-title>
         {{ data.productname }}

@@ -12,9 +12,10 @@ import 'rxjs/add/observable/interval'
 export class HomePage {
   @ViewChild('lineCanvas') lineCanvas;
   observer: Observable<any>;
-  //result : JSON;
+  result2 : any;
   result: any;
   items = []
+  products = []
   timerVar;
   timerMin=10;
   timerSec=59;
@@ -23,35 +24,51 @@ export class HomePage {
   public getSimilarProducts(productname:String){
     this.items = []
 
-    console.log(productname)
-    //this.observer = this.httpClient.get('http://localhost:5000/similarprods')
-    //postData.append("data", "Apple iPhone 7 Plus (32GB)")
-    //let postData = JSON.stringify({"data": "Apple iPhone 7 Plus (32GB)"});;
     //let headers = new HttpHeaders()
     //headers = headers.append('Content-Type','application/json')
     
-    //Apple iPhone 7 Plus (32GB)
-    let postData = {"data": productname}
+    //e.g. Apple iPhone 7 Plus (32GB)
+    console.log("productname", productname)
+    if (productname != ""){
+      let postData = {"data": productname}
 
-    this.observer = this.httpClient.post('http://localhost:5000/devicedata', postData)
-    this.observer.subscribe(data => { 
-      this.result = data
-     })
-     let json_result;
+      this.observer = this.httpClient.post('http://localhost:5000/devicedata', postData)
+      this.observer.subscribe(data => { 
+        this.result = data
+      })
 
-     if (this.result != undefined){
-       json_result = JSON.parse(JSON.stringify(this.result))
-       //console.log(json_result['recommendations'])
-       for (let product in json_result['recommendations']){
-        console.log(json_result['recommendations'][product])
-        this.items.push(json_result['recommendations'][product])
+      console.log("result", this.result)
+      let json_result;
+
+      if (this.result != undefined){
+        json_result = JSON.parse(JSON.stringify(this.result))
+        
+        console.log(json_result['recommendations'])
+        for (let product in json_result['recommendations']){
+          console.log(json_result['recommendations'][product])
+          this.items.push(json_result['recommendations'][product])
+        }
       }
-     }
+    }
+  }
 
-     /*for (let product in this.result){
-      console.log(this.result[product])
-      this.items.push(this.result[product])
-     }*/
+  public getProductList(){
+    
+    this.httpClient.get('http://localhost:5000/getDeviceList').subscribe(data => 
+    { 
+      this.result2 = data
+    })
+
+    console.log("product results", this.result2)
+
+    /*let json_result
+    if (result2 != undefined){
+      json_result = JSON.parse(JSON.stringify(this.result))
+      for (let product in json_result){
+        console.log(json_result)
+        this.products.push(json_result)
+      }
+    }*/
   }
 
   startTimer(){
@@ -73,6 +90,7 @@ export class HomePage {
       this.result = data
      })*/
      this.data.productname=""
+     this.getProductList()
   }
 
 }
