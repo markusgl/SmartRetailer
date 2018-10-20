@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Price View</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      Sasmsung A5 64GB
+    </ion-card-header>
+      <ion-card-content>
+        <canvas height= "300px"         baseChart
+        [datasets]="barChartData"
+        [options]="barChartOptions"
+        [labels]="barChartLabels"
+        [colors]="backgroundColors"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        (chartHover)="barChartHovered($event)"
+        (chartClick)="barChartClicked($event)">
+      </canvas>  
+
+      <ion-item>
+          Distance
+          <ion-badge item-end>{{distance}} km</ion-badge>
+      </ion-item>
+
+      <ion-item>     
+        <ion-range min="1" max="50" step="5" snaps="true" [(ngModel)]="distance" (ionChange)="initChart($event)">
+          <ion-icon range-left small name="md-map"></ion-icon>
+          <ion-icon range-right name="md-map"></ion-icon>
+        </ion-range>
+      </ion-item> 
+
+      <button block ion-button *ngIf="filterTopRetailers;else outline"  (click)="filterTopRetailersClicked()">Top Retailers</button>
+      
+      <ng-template #outline>
+          <button block outline ion-button  (click)="filterTopRetailersClicked()">Top Retailers</button>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
