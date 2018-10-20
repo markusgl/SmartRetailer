@@ -8,4 +8,15 @@
 
 <ion-content padding>
 
+    <div style="display: block;" >
+      <canvas height="400%" baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      (chartHover)="barChartHovered($event)"
+      (chartClick)="barChartClicked($event)">
+   </canvas>   
+  </div> 
 </ion-content>
