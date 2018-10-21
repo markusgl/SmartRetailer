@@ -42,21 +42,21 @@ export class HomePage {
       this.observer = this.httpClient.post('http://localhost:5000/devicedata', postData)
       this.observer.subscribe(data => { 
         this.result = data
+      
+        let json_result;
+        if (this.result != undefined){
+          json_result = JSON.parse(JSON.stringify(this.result))
+          console.log("stars", json_result['stars'])
+          
+          for (let product in json_result['recommendations']){
+            this.items.push(json_result['recommendations'][product])
+          } 
+        }
+        else{
+          // TODO
+          console.log("No similar products found.")
+        }
       })
-
-      let json_result;
-      if (this.result != undefined){
-        json_result = JSON.parse(JSON.stringify(this.result))
-        console.log("stars", json_result['stars'])
-        
-        for (let product in json_result['recommendations']){
-          this.items.push(json_result['recommendations'][product])
-        } 
-      }
-      else{
-        // TODO
-        console.log("No similar products found.")
-      }
     }
   }
 
@@ -66,16 +66,17 @@ export class HomePage {
     this.httpClient.get('http://localhost:5000/getDeviceList').subscribe(data => 
     { 
       this.result2 = data
-    }) 
+    
 
-    let json_result
-    if (this.result2 != undefined){
-      json_result = JSON.parse(JSON.stringify(this.result2))
-      for (let product in json_result){
-        this.products.push(json_result[product])
+      let json_result
+      if (this.result2 != undefined){
+        json_result = JSON.parse(JSON.stringify(this.result2))
+        for (let product in json_result){
+          this.products.push(json_result[product])
+        }
+        this.products.sort()
       }
-      this.products.sort()
-    }
+    }) 
   }
 
   /*startTimer(){

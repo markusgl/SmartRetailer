@@ -61,35 +61,35 @@ export class PricePage implements OnInit {
     this.observer = this.httpClient.post('http://localhost:5000/getPricesInOtherShops', postData)
     this.observer.subscribe(data => { 
       this.result = data
-    })
-    console.log("received results", this.result)
-   
-    if (this.result != undefined){
-      this.json_result = JSON.parse(JSON.stringify(this.result))
-      console.log(this.json_result)
-    }
+      
+      console.log("received results", this.result)
     
-
-    if (this.json_result != undefined){
-      this.priceData = []
-      for (let j = 0; j < 4; j++){
-        console.log(this.json_result['prices'][j])
-        console.log(this.json_result['shop'][j])
-        
-        this.priceData.push({
-          "retailerId": 1,
-          "productPrice": this.json_result['prices'][j],
-          "current":false,
-          "retailerName": this.json_result['shop'][j],
-          "retailerAddress": null,
-          "retailerDistance": null,
-          "rating": 5
-        })
+      if (this.result != undefined){
+        this.json_result = JSON.parse(JSON.stringify(this.result))
+        console.log(this.json_result)
       }
+      
 
-      this.initChart();
-    }
+      if (this.json_result != undefined){
+        this.priceData = []
+        for (let j = 0; j < 4; j++){
+          console.log(this.json_result['prices'][j])
+          console.log(this.json_result['shop'][j])
+          
+          this.priceData.push({
+            "retailerId": 1,
+            "productPrice": this.json_result['prices'][j],
+            "current":false,
+            "retailerName": this.json_result['shop'][j],
+            "retailerAddress": null,
+            "retailerDistance": null,
+            "rating": 5
+          })
+        }
 
+        this.initChart();
+      }
+    })
   }
 
 
