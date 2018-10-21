@@ -38,26 +38,27 @@
   </ion-item> --> 
 
   <ion-item>
-    <ion-label>Products</ion-label>
-    <ion-select [(ngModel)]="data.productname" (ionChange)="getSimilarProducts(product)">
+    <ion-label>Select a product</ion-label>
+    <ion-select [(ngModel)]="data.productname" (ionChange)="getProductList()">
       <ion-option *ngFor="let product of products; let i=index" >{{ product }}</ion-option>
     </ion-select>
   </ion-item>
-
-  <ion-item>
-    <ion-icon name="md-git-compare"></ion-icon>
-    <button (click)="getProductList()" ion-button icon-start clear small>Refresh product list</button>
+  <button (click)="getProductList()" ion-button icon-start clear small><ion-icon name="qr-scanner"></ion-icon>Scan QR-Code</button>
+  
+  <!--<ion-item>  -->
+    <!-- <button (click)="getProductList()" ion-button icon-start clear small>Refresh product list</button> -->
     <!--<button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>Search similar products</button>-->
-  </ion-item>
+  <!-- </ion-item>-->
 
   <ion-card *ngIf="data.productname">
     <!--<img src="/test.jpg"/>-->
     <ion-card-content>
+      <img src="./Apple_iPhone7.jpg" height="30%" />
       <ion-card-title>
         {{ data.productname }}
       </ion-card-title>
       <p>
-        This is a very good product. Buy it within 10 minuts to get 10% a discount!
+        This is a very good product. Buy it within 10 minuts to get a 10% discount!
       </p>
     </ion-card-content>
 
@@ -65,24 +66,47 @@
       <ion-col>
         <button (click)="getSimilarProducts(data.productname)" ion-button icon-start clear small>
           <ion-icon name="md-appstore"></ion-icon>
-          <div>Show similar products</div>
+          <div>Smilar products</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="star"></ion-icon>
+          <div>Rating 4.5</div>
         </button>
       </ion-col>
     </ion-row>
+    
   </ion-card>
 
   <ion-item *ngIf="items.length > 0">
       <h2><b>Similar products</b></h2>
   </ion-item>
   <ion-list>
-      <ion-item *ngFor="let item of items">
-        <!--<ion-thumbnail item-start>
-        </ion-thumbnail>-->
+    <ion-item *ngFor="let item of items; let i=index">
+      <!--<ion-thumbnail item-start>
+      </ion-thumbnail>-->
 
-        <h2>{{ item }}</h2>
-        <!-- <p> {{ item }}</p> -->
-        <button ion-button clear item-end>View</button>
-      </ion-item>
-    </ion-list>
+      <h2>{{ item }}</h2>
+      <!-- <p> {{ item }}</p> -->
+      <button ion-button clear item-end>View</button>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="pie"></ion-icon>
+            <div>Similarity {{ similarities[i] }}%</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="star"></ion-icon>
+            <div>{{ ratings[i] }}</div>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-item>
+  </ion-list>
 
 </ion-content>

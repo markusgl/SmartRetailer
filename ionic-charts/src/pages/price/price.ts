@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { IRetailerPrice } from './retailerPrice';
@@ -11,12 +11,15 @@ import { IRetailerPrice } from './retailerPrice';
 export class PricePage implements OnInit {
   distance: number = 5;
   filterTopRetailers: boolean = false;
-  
+  productname:String;
   filteredPriceData: IRetailerPrice[];
   priceData: IRetailerPrice[];
+  result: any;
+  json_result:JSON;
 
   @ViewChild('lineCanvas') lineCanvas;
   plotdata: Observable<any>;
+  observer: Observable<any>;
 
   //**########## BAR CHART ######### *//
   public barChartType:string = 'bar';
@@ -40,10 +43,60 @@ export class PricePage implements OnInit {
   public barChartData: any[] = [{data:[]}];
 
   // ctor
-  constructor() {
-    // todo inject data service
+  constructor(public navCtrl: NavController, public httpClient: HttpClient) {
+    let data = JSON.parse(localStorage.getItem('myData'));
+    this.productname = data.productname;
+    
+    this.getPrices()
   }
+
+  getPrices():void{
+    //request the data
+    let data = JSON.parse(localStorage.getItem('myData'));
+    this.productname = data.productname;
+
+    console.log("productname", this.productname)
+    let postData = {"data": this.productname} 
+    //let postData = {"data":"Apple iPhone 7 (32GB)"}
+    this.observer = this.httpClient.post('http://localhost:5000/getPricesInOtherShops', postData)
+    this.observer.subscribe(data => { 
+      this.result = data
+    })
+    console.log("received results", this.result)
+   
+    if (this.result != undefined){
+      this.json_result = JSON.parse(JSON.stringify(this.result))
+      console.log(this.json_result)
+    }
+    
+
+    if (this.json_result != undefined){
+      this.priceData = []
+      for (let j = 0; j < 4; j++){
+        console.log(this.json_result['prices'][j])
+        console.log(this.json_result['shop'][j])
+        
+        this.priceData.push({
+          "retailerId": 1,
+          "productPrice": this.json_result['prices'][j],
+          "current":false,
+          "retailerName": this.json_result['shop'][j],
+          "retailerAddress": null,
+          "retailerDistance": null,
+          "rating": 5
+        })
+      }
+
+      this.initChart();
+    }
+
+  }
+
+
   ngOnInit(): void {
+    this.getPrices()
+
+    /*
     this.priceData = [
       {
         "retailerId": 1,
@@ -93,6 +146,7 @@ export class PricePage implements OnInit {
     ];
 
     this.initChart();
+    */
   }
 
   // BAR CHART events
@@ -140,8 +194,8 @@ export class PricePage implements OnInit {
 
     if (maxPrice > 0) {
       let range = maxPrice - minPrice;
-      this.barChartOptions.scales.yAxes[0].ticks.max = maxPrice + 50;
-      this.barChartOptions.scales.yAxes[0].ticks.min = minPrice - 50;
+      this.barChartOptions.scales.yAxes[0].ticks.max = Math.ceil((maxPrice + range*0.2)/10)*10;
+      this.barChartOptions.scales.yAxes[0].ticks.min = Math.floor((minPrice + range*0.3)/10)*10;
     }
   }
 }
