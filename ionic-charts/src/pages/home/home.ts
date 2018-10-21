@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { PricePage } from '../price/price';
@@ -24,6 +24,7 @@ export class HomePage {
   stars:any;
   similarities = [96, 92, 90, 93];
   ratings = [3.4, 4.1, 4.3, 3.9];
+  
 
   public getSimilarProducts(productname:String){
     this.items = []
@@ -57,6 +58,14 @@ export class HomePage {
           console.log("No similar products found.")
         }
       })
+      
+      // Discount alert
+      const alert = this.alertCtrl.create({
+        title: 'Discout Alert!',
+        subTitle: 'Buy within the next 10 minutes and get 10% discount!',
+        buttons: ['OK']
+      });
+      alert.present();
     }
   }
 
@@ -67,7 +76,6 @@ export class HomePage {
     { 
       this.result2 = data
     
-
       let json_result
       if (this.result2 != undefined){
         json_result = JSON.parse(JSON.stringify(this.result2))
@@ -91,13 +99,12 @@ export class HomePage {
   }*/
 
   // call the rest api inside the constructor
-  constructor(public navCtrl: NavController, public httpClient: HttpClient) {
+  constructor(public navCtrl: NavController, public httpClient: HttpClient, public alertCtrl: AlertController) {
     /*this.observer = this.httpClient.get('http://localhost:5000/similarprods')
     this.observer.subscribe(data => { 
       this.result = data
      })*/
      this.data.productname=""
-     this.getProductList()
   }
 
   ngOnInit(): void {
