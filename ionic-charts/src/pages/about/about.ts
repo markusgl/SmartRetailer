@@ -54,12 +54,7 @@ export class AboutPage {
     let clone = JSON.parse(JSON.stringify(this.barChartData));
     clone[0].data = data;
     this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
+
   }
   constructor(public navCtrl: NavController) {
 

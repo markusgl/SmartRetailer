@@ -57,7 +57,6 @@ export class PricePage implements OnInit {
 
     console.log("productname", this.productname)
     let postData = {"data": this.productname} 
-    //let postData = {"data":"Apple iPhone 7 (32GB)"}
     this.observer = this.httpClient.post('http://localhost:5000/getPricesInOtherShops', postData)
     this.observer.subscribe(data => { 
       this.result = data
@@ -95,7 +94,8 @@ export class PricePage implements OnInit {
 
   ngOnInit(): void {
     this.getPrices()
-
+    
+    /** TESTDATA */
     /*
     this.priceData = [
       {

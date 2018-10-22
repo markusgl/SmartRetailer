@@ -29,10 +29,7 @@ export class HomePage {
   public getSimilarProducts(productname:String){
     this.items = []
     console.log("items", this.items)
-    //let headers = new HttpHeaders()
-    //headers = headers.append('Content-Type','application/json') 
 
-    //e.g. Apple iPhone 7 Plus (32GB)
     console.log("productname", productname)
     if (productname != ""){
       let postData = {"data": productname}
@@ -87,24 +84,9 @@ export class HomePage {
     }) 
   }
 
-  /*startTimer(){
-    // one second interval
-    this.timerVar = Observable.interval(1000).subscribe( x => {
-        this.timerSec -= 1;
-        
-        if (x == 0) {
-          this.timerVar.unsubscribe()
-        }
-    })
-  }*/
 
-  // call the rest api inside the constructor
   constructor(public navCtrl: NavController, public httpClient: HttpClient, public alertCtrl: AlertController) {
-    /*this.observer = this.httpClient.get('http://localhost:5000/similarprods')
-    this.observer.subscribe(data => { 
-      this.result = data
-     })*/
-     this.data.productname=""
+      this.data.productname=""
   }
 
   ngOnInit(): void {

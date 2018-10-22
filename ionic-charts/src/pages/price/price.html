@@ -37,7 +37,6 @@
       <button block ion-button *ngIf="filterTopRetailers;else outline"  (click)="filterTopRetailersClicked()">Top Retailers</button>
       
       <ng-template #outline>
-          <!--<button block outline ion-button  (click)="filterTopRetailersClicked()">Top Retailers</button>-->
           <button block outline ion-button  (click)="getPrices()">Top Retailers</button>
       </ng-template>
     </ion-card-content>
